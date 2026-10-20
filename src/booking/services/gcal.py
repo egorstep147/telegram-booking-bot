@@ -4,10 +4,12 @@
 - новая запись появляется событием в календаре, отмена его удаляет.
 Любая ошибка Google не ломает запись: календарь — дополнение, а не источник правды."""
 
+import asyncio
 import json
 import logging
 import time
 from datetime import datetime
+from pathlib import Path
 
 import httpx
 from google.auth import crypt, jwt
@@ -30,8 +32,8 @@ async def _access_token() -> str:
     global _token
     if _token[1] > time.time() + 60:
         return _token[0]
-    with open(settings.google_credentials_file, encoding="utf-8") as f:
-        info = json.load(f)
+    text = await asyncio.to_thread(Path(settings.google_credentials_file).read_text, encoding="utf-8")
+    info = json.loads(text)
     now = int(time.time())
     assertion = jwt.encode(
         crypt.RSASigner.from_service_account_info(info),

@@ -50,6 +50,7 @@ async def _insert(s: AsyncSession, b: Booking) -> Booking:
         if "no_double_booking" in str(e.orig):
             raise BookingError("Это время только что заняли — выберите другое") from None
         raise
+    await s.refresh(b, ["master", "service"])  # для сообщений после закрытия сессии
     return b
 
 
@@ -147,7 +148,8 @@ async def mark(s: AsyncSession, b: Booking, status: str) -> Booking:
 
 
 async def mark_paid(s: AsyncSession, booking_id: int, amount: int, charge_id: str) -> Booking | None:
-    b = await s.get(Booking, booking_id, with_for_update=True)
+    # FOR UPDATE только по bookings: к LEFT JOIN-подгрузке мастера и услуги блокировку не применить
+    b = await s.scalar(select(Booking).where(Booking.id == booking_id).with_for_update(of=Booking))
     if b is None or b.status != "pending":
         return None  # повтор апдейта или запись уже снята по таймауту
     b.paid, b.charge_id, b.status = b.paid + amount, charge_id, "confirmed"
