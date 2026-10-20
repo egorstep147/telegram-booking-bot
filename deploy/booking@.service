@@ -1,0 +1,19 @@
+# Шаблон службы, один экземпляр на бизнес: booking@barbershop читает /home/booking/envs/barbershop.env
+[Unit]
+Description=Telegram booking %i
+After=network-online.target postgresql.service redis-server.service
+Wants=network-online.target postgresql.service redis-server.service
+
+[Service]
+User=booking
+WorkingDirectory=/home/booking/telegram-booking-bot
+EnvironmentFile=/home/booking/envs/%i.env
+ExecStartPre=/home/booking/telegram-booking-bot/.venv/bin/booking migrate
+ExecStart=/home/booking/telegram-booking-bot/.venv/bin/booking run
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target
