@@ -197,3 +197,13 @@ async def test_google_calendar_busy_closes_slots(monkeypatch):
     assert at(day, 15) not in free and at(day, 16, 30) not in free and at(day, 17) in free
     async with Session() as s, s.begin():
         (await ids(s))[1]["ivan"].gcal_id = None
+
+
+async def test_no_payment_token_means_no_prepay(monkeypatch):
+    from pydantic import SecretStr
+
+    from booking.config import settings
+
+    monkeypatch.setattr(settings, "payment_token", SecretStr(""))
+    b = await book(114, "beard", at(next_weekday(4, after_days=14), 11), "ivan")
+    assert (b.prepay, b.status) == (0, "confirmed")  # без провайдера запись подтверждается сразу

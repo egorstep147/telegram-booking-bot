@@ -98,7 +98,11 @@ async def config() -> dict:
             "waitlist",
             "max_days_ahead",
         }
-    ) | {"timezone": n.timezone, "prepay": n.prepay.model_dump(), "today": now().date().isoformat()}
+    ) | {
+        "timezone": n.timezone,
+        "prepay": n.prepay.model_dump() | {"mode": n.prepay_mode},
+        "today": now().date().isoformat(),
+    }
 
 
 @router.get("/catalog")

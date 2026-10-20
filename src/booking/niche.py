@@ -37,8 +37,13 @@ class Niche(BaseModel):
     prepay: Prepay = Prepay()
     waitlist: bool = True
 
+    @property
+    def prepay_mode(self) -> str:
+        # Без платёжного токена предоплата невозможна — записываем без неё, а не ломаем запись
+        return self.prepay.mode if settings.payment_token.get_secret_value() else "none"
+
     def prepay_amount(self, price: int) -> int:
-        return {"none": 0, "deposit": min(self.prepay.deposit, price), "full": price}[self.prepay.mode]
+        return {"none": 0, "deposit": min(self.prepay.deposit, price), "full": price}[self.prepay_mode]
 
 
 @cache
