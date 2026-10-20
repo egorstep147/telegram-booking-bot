@@ -1,0 +1,33 @@
+branches:
+  - {slug: online, name: Онлайн, address: "Ссылка на занятие придёт в чат"}
+
+services:
+  - {slug: math-oge, category: Математика, name: Математика ОГЭ, emoji: 📐, duration: 60, buffer: 10, price: 1500,
+     rebook_weeks: 1}
+  - {slug: math-ege, category: Математика, name: Профильная математика ЕГЭ, emoji: 📈, duration: 90, buffer: 10,
+     price: 2200, rebook_weeks: 1}
+  - {slug: python, category: Программирование, name: Python с нуля, emoji: 🐍, duration: 60, buffer: 10, price: 1800,
+     rebook_weeks: 1}
+  - {slug: english, category: Языки, name: Английский разговорный, emoji: 🇬🇧, duration: 60, buffer: 10, price: 1600,
+     rebook_weeks: 1}
+  - {slug: trial, category: Пробное, name: Пробное занятие, emoji: 🎁, duration: 30, buffer: 10, price: 300}
+
+masters:
+  - slug: petrov
+    name: Алексей Петров
+    title: Учитель математики, эксперт ЕГЭ
+    photo: 👨‍🏫
+    services: [math-oge, math-ege, trial]
+    schedule: {mon-fri: ["15:00-21:00"], sat: ["10:00-14:00"]}
+  - slug: lee
+    name: Мария Ли
+    title: Разработчик, преподаёт Python
+    photo: 👩‍💻
+    services: [python, trial]
+    schedule: {"mon,wed,fri": ["18:00-22:00"], sun: ["12:00-18:00"]}
+  - slug: smith
+    name: Джон Смит
+    title: Носитель языка
+    photo: 🧑‍🏫
+    services: [english, trial]
+    schedule: {"tue,thu": ["08:00-12:00", "18:00-21:00"]}

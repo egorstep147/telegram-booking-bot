@@ -1,0 +1,23 @@
+# Витрина и правила записи. Услуги, мастера и графики — в catalog.yaml
+name: Барбершоп «Борода»
+tagline: Стрижки и бороды без очереди
+emoji: 💈
+accent: "#c2410c"
+timezone: Asia/Kamchatka
+welcome: |
+  Привет! Это барбершоп «Борода» 💈
+  Выберите услугу, мастера и удобное время — запись за 30 секунд.
+address: ул. Ленинская, 10
+phone: "+7 900 000-00-00"
+master_word: Барбер
+slot_step: 15
+min_lead_minutes: 60
+max_days_ahead: 21
+cancel_before_hours: 3
+reminders: [1440, 120]  # за сутки и за 2 часа
+review_after_minutes: 60
+prepay:
+  mode: deposit  # none | deposit | full
+  deposit: 300
+  hold_minutes: 15
+waitlist: true

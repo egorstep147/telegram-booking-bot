@@ -1,0 +1,36 @@
+branches:
+  - {slug: pobedy, name: «Лаванда» на Победы, address: "пр. Победы, 5"}
+  - {slug: center, name: «Лаванда» в центре, address: "ул. Ленинская, 30"}
+
+services:
+  - {slug: manicure, category: Ногти, name: Маникюр с покрытием, emoji: 💅, duration: 90, buffer: 15, price: 2200,
+     rebook_weeks: 3}
+  - {slug: pedicure, category: Ногти, name: Педикюр, emoji: 🦶, duration: 90, buffer: 15, price: 2600, rebook_weeks: 4}
+  - {slug: removal, category: Ногти, name: Снятие покрытия, emoji: 🧴, duration: 30, buffer: 5, price: 500}
+  - {slug: brows, category: Брови и ресницы, name: Архитектура бровей, emoji: 🤨, duration: 60, buffer: 10,
+     price: 1500, rebook_weeks: 4}
+  - {slug: lashes, category: Брови и ресницы, name: Наращивание ресниц, emoji: 👁, duration: 150, buffer: 15,
+     price: 3000, rebook_weeks: 3}
+
+masters:
+  - slug: anna
+    name: Анна
+    title: Топ-мастер маникюра
+    branch: pobedy
+    photo: 👩‍🦰
+    services: {manicure: {price: 2600}, pedicure: {}, removal: {}}
+    schedule: {mon-fri: ["10:00-19:00"]}
+  - slug: olga
+    name: Ольга
+    title: Бровист, лэшмейкер
+    branch: center
+    photo: 👩
+    services: [brows, lashes]
+    schedule: {"tue,thu,sat": ["09:00-18:00"]}
+  - slug: kate
+    name: Екатерина
+    title: Мастер маникюра
+    branch: center
+    photo: 👱‍♀️
+    services: [manicure, removal]
+    schedule: {wed-sun: ["11:00-20:00"]}

@@ -1,0 +1,19 @@
+name: Студия красоты «Лаванда»
+tagline: Маникюр, брови, ресницы
+emoji: 💅
+accent: "#9333ea"
+timezone: Asia/Kamchatka
+welcome: |
+  Здравствуйте! Студия «Лаванда» 💅
+  Запишитесь к любимому мастеру в пару касаний.
+address: пр. Победы, 5, 2 этаж
+master_word: Мастер
+slot_step: 30
+min_lead_minutes: 120
+max_days_ahead: 30
+cancel_before_hours: 12
+reminders: [1440, 180]
+review_after_minutes: 120
+prepay:
+  mode: none
+waitlist: true

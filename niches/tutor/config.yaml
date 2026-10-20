@@ -1,0 +1,19 @@
+name: Онлайн-школа «Пятёрка»
+tagline: Индивидуальные занятия с репетиторами
+emoji: 🎓
+accent: "#0369a1"
+timezone: Asia/Kamchatka
+welcome: |
+  Здравствуйте! Онлайн-школа «Пятёрка» 🎓
+  Выберите предмет, преподавателя и время занятия.
+master_word: Преподаватель
+slot_step: 30
+min_lead_minutes: 180
+max_days_ahead: 14
+cancel_before_hours: 24
+reminders: [1440, 60]
+review_after_minutes: 30
+prepay:
+  mode: full
+  hold_minutes: 20
+waitlist: false

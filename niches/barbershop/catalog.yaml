@@ -1,0 +1,40 @@
+# schedule: «дни: [интервалы]». Перерыв — два интервала в день. Дни: mon tue wed thu fri sat sun, mon-fri, sat,sun
+# services у мастера: список slug или {slug: {price: , duration: }} — своя цена/длительность
+branches:
+  - {slug: center, name: «Борода» на Ленинской, address: "ул. Ленинская, 10"}
+
+services:
+  - {slug: haircut, category: Стрижки, name: Мужская стрижка, emoji: ✂️, duration: 45, buffer: 10, price: 1500,
+     rebook_weeks: 4, description: Мытьё головы, стрижка, укладка}
+  - {slug: fade, category: Стрижки, name: Фейд, emoji: 💇‍♂️, duration: 60, buffer: 10, price: 1800, rebook_weeks: 3}
+  - {slug: kids, category: Стрижки, name: Детская стрижка, emoji: 👦, duration: 30, buffer: 10, price: 1000,
+     description: До 12 лет}
+  - {slug: beard, category: Борода, name: Моделирование бороды, emoji: 🧔, duration: 30, buffer: 10, price: 1000,
+     rebook_weeks: 3}
+  - {slug: shave, category: Борода, name: Королевское бритьё, emoji: 🪒, duration: 45, buffer: 10, price: 1500,
+     description: Горячее полотенце, опасная бритва}
+  - {slug: combo, category: Комплекс, name: Стрижка + борода, emoji: 💈, duration: 75, buffer: 10, price: 2300,
+     rebook_weeks: 4}
+
+masters:
+  - slug: ivan
+    name: Иван
+    title: Топ-барбер
+    photo: 🧔
+    bio: 8 лет опыта, фейды и классика
+    services: {haircut: {price: 1900}, fade: {price: 2200}, beard: {}, shave: {}, combo: {price: 2800}}
+    schedule: {mon-fri: ["10:00-14:00", "15:00-20:00"], sat: ["11:00-17:00"]}
+  - slug: artem
+    name: Артём
+    title: Барбер
+    photo: 👨‍🦱
+    bio: Стрижки любой сложности, дети — без слёз
+    services: [haircut, fade, kids, beard, combo]
+    schedule: {tue-sat: ["10:00-19:00"]}
+  - slug: max
+    name: Максим
+    title: Младший барбер
+    photo: 🧑
+    bio: Аккуратно и недорого
+    services: {haircut: {price: 1200}, kids: {price: 800}, beard: {price: 800}}
+    schedule: {wed-sun: ["12:00-21:00"]}

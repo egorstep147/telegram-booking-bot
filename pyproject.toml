@@ -1,0 +1,51 @@
+[project]
+name = "booking"
+version = "0.1.0"
+description = "Запись на услуги в Telegram: Mini App, мастера и графики, предоплата, напоминания, лист ожидания, Google Календарь"
+readme = "README.md"
+authors = [
+    { name = "Egor Stepanov", email = "egorstep147@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram>=3.31.0",
+    "alembic>=1.20.0",
+    "asyncpg>=0.32.0",
+    "fastapi>=0.150.0",
+    "google-auth>=2.62.0",
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.16.0",
+    "pyyaml>=6.0.3",
+    "redis>=8.1.0",
+    "sqlalchemy[asyncio]>=2.1.5",
+    "tzdata>=2026.5",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[project.scripts]
+booking = "booking.main:main"
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.17.1",
+]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+extend-exclude = ["migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "ASYNC"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]

@@ -1,0 +1,38 @@
+# База и Redis для разработки: docker compose up -d
+# Бот целиком:                docker compose --profile app up -d --build
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: booking
+      POSTGRES_DB: booking
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:5434:5432"  # 5434 — чтобы не мешать другим Postgres на компьютере
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "booking"]
+      interval: 5s
+
+  redis:
+    image: redis:8-alpine
+    ports:
+      - "127.0.0.1:6381:6379"
+
+  bot:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://booking:${POSTGRES_PASSWORD}@postgres:5432/booking
+      REDIS_URL: redis://redis:6379/0
+    ports:
+      - "127.0.0.1:8085:8085"
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_started}
+    restart: unless-stopped
+    profiles: [app]
+
+volumes:
+  pgdata:
