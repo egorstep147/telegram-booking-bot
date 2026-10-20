@@ -171,3 +171,29 @@ async def test_jobs_expire_remind_finish_rebook():
         assert await jobs.due_reminders(s) == []  # повторно не напоминаем
         await s.execute(update(Booking).where(Booking.id == past.id).values(rebook_at=now() - timedelta(minutes=1)))
         assert [b.id for b in await jobs.due_rebook(s)] == [past.id]
+
+
+async def test_google_calendar_busy_closes_slots(monkeypatch):
+    """Занятое в Google Календаре мастера закрывает время для записи (сам Google подменён)."""
+    from booking.services import gcal
+
+    day = next_weekday(3, after_days=12)
+    calls = []
+
+    async def fake_busy(calendar_id, start, end):
+        calls.append(calendar_id)
+        return [(at(day, 15), at(day, 17))]  # у мастера личные дела 15–17
+
+    monkeypatch.setattr(gcal, "enabled", lambda: True)
+    monkeypatch.setattr(gcal, "busy", fake_busy)
+    async with Session() as s, s.begin():
+        svc, mst = await ids(s)
+        mst["ivan"].gcal_id = "ivan@example.com"
+    async with Session() as s:
+        svc, mst = await ids(s)
+        free = await schedule.slots(s, svc["beard"], day, mst["ivan"].id)
+    assert calls == ["ivan@example.com"]
+    assert at(day, 14, 30) not in free  # перерыв
+    assert at(day, 15) not in free and at(day, 16, 30) not in free and at(day, 17) in free
+    async with Session() as s, s.begin():
+        (await ids(s))[1]["ivan"].gcal_id = None
